@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 from backend.app.database import locations_db
 from backend.app.services.dem_service import get_terrain_features
 from backend.app.services.weather_service import get_weather_features
-
+from backend.app.services.historical_service import  (get_historical_landslides)
 from backend.app.schemas.site_risk import (
     SiteRiskResponse,
     TerrainLayer,
@@ -152,7 +152,18 @@ def get_site_risk(location_id: str):
     # HISTORICAL DATA
     # -----------------------------------------
 
-    historical_events = 3
+    # HISTORICAL DATA
+   # -----------------------------------------
+# HISTORICAL DATA
+# -----------------------------------------
+    historical_data = get_historical_landslides(
+    latitude=latitude,
+    longitude=longitude,
+)
+
+    historical_events = historical_data[
+    "historical_events"
+]
 
     # -----------------------------------------
     # RISK ENGINE
@@ -240,6 +251,6 @@ def get_site_risk(location_id: str):
         ),
 
         historical=HistoricalLayer(
-            historical_events=historical_events
+        historical_events=historical_events
         ),
     )

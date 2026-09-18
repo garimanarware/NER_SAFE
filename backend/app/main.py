@@ -6,6 +6,7 @@ from backend.app.api.forecasts import router as forecasts_router
 from backend.app.api.alerts import router as alerts_router
 from backend.app.api.terrain import router as terrain_router
 from backend.app.api.site_risk import router as site_risk_router
+from backend.app.api.historical import router as historical_router
 
 app = FastAPI(
     title="NER-SAFE API",
@@ -19,6 +20,7 @@ app.add_middleware(
     allow_origins=[
         "http://127.0.0.1:5500",
         "http://localhost:5500",
+        "*",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -31,6 +33,7 @@ app.include_router(forecasts_router)
 app.include_router(alerts_router)
 app.include_router(terrain_router)
 app.include_router(site_risk_router)
+app.include_router(historical_router)
 
 
 @app.get("/")
